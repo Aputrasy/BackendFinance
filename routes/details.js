@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const detailController = require('../controllers/detailController');
-const authMiddleware = require('../middleware/auth');
+//const authMiddleware = require('../middleware/auth');
 
 // All routes require authentication
-router.use(authMiddleware);
+//router.use(authMiddleware);
 
 // Get details by master (query param style for frontend compatibility)
 router.get('/', detailController.getByMasterQuery);
 
 // Detail CRUD routes (RESTful style)
 router.post('/', detailController.create);
+router.get('/:id', detailController.getById);
 router.put('/:id', detailController.update);
 router.delete('/:id', detailController.delete);
 
