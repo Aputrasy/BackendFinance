@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const detailController = require('../controllers/detailController');
-const authMiddleware = require('../middleware/auth');
+//const authMiddleware = require('../middleware/auth');
 
 // All routes require authentication
-router.use(authMiddleware);
+//router.use(authMiddleware);
 
 // Get details by master (query param style for frontend compatibility)
 router.get('/', detailController.getByMasterQuery);
