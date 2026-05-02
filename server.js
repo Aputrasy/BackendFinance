@@ -29,7 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Request logging middleware
 app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+    const authHeader = req.headers.authorization ? '✓ Authorization header present' : '✗ No Authorization header';
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.path} [${authHeader}]`);
     next();
 });
 
