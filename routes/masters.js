@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const masterController = require('../controllers/masterController');
-//const authMiddleware = require('../middleware/auth');
+const authMiddleware = require('../middleware/auth');
 
 // All routes require authentication
-//router.use(authMiddleware);
+router.use(authMiddleware);
 
 // Master CRUD routes
 router.get('/', masterController.getAll);
