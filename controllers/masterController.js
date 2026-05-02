@@ -38,6 +38,7 @@ class MasterController {
         }
     }
 
+
     // Get master by ID
     async getById(req, res) {
         try {

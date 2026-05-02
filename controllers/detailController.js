@@ -15,6 +15,7 @@ class DetailController {
                 });
             }
 
+
             // Verify master belongs to user
             const masterCheck = await pool.request()
                 .input('masterId', masterId)
@@ -53,6 +54,57 @@ class DetailController {
             res.status(500).json({
                 success: false,
                 message: 'Failed to get details',
+                error: error.message
+            });
+        }
+    }
+
+    // Get single detail by ID
+    async getById(req, res) {
+        try {
+            const pool = await getPool();
+            const userId = req.user.userId;
+            const detailId = parseInt(req.params.id);
+
+            if (!detailId) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Detail ID is required'
+                });
+            }
+
+            const result = await pool.request()
+                .input('detailId', detailId)
+                .query(`
+                    SELECT 
+                        d.Id AS id,
+                        d.MasterId AS masterId,
+                        d.Description AS description,
+                        CONVERT(VARCHAR(10), d.Date, 120) AS date,
+                        CAST(d.Amount AS DECIMAL(18,0)) AS amount,
+                        d.Type AS type
+                    FROM Details d
+                    INNER JOIN Masters m ON d.MasterId = m.Id
+                    WHERE d.Id = @detailId AND m.UserId = @userId
+                `);
+
+            if (result.recordset.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Detail not found or access denied'
+                });
+            }
+
+            res.json({
+                success: true,
+                data: result.recordset[0]
+            });
+
+        } catch (error) {
+            console.error('Get detail error:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to get detail',
                 error: error.message
             });
         }

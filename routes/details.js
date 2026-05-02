@@ -11,6 +11,7 @@ router.get('/', detailController.getByMasterQuery);
 
 // Detail CRUD routes (RESTful style)
 router.post('/', detailController.create);
+router.get('/:id', detailController.getById);
 router.put('/:id', detailController.update);
 router.delete('/:id', detailController.delete);
 
