@@ -7,6 +7,7 @@ const { connectDB, closeDB } = require('./config/database');
 const authRoutes = require('./routes/auth');
 const masterRoutes = require('./routes/masters');
 const detailRoutes = require('./routes/details');
+const viewRoutes = require('./routes/view');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -47,6 +48,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/masters', masterRoutes);
 app.use('/api/details', detailRoutes);
+app.use('/api/view', viewRoutes);
 
 // 404 handler
 app.use((req, res) => {
